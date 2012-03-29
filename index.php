@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Setup Slim and Mustache components.
  */
 require_once 'rest/Slim.php';
 require_once 'rest/MustacheView.php';
 $app = new Slim(array(
+    'mode' => 'development', // or 'production'
     'view' => new MustacheView(),
     'templates.path' => __DIR__ . '/app/templates',
 ));
@@ -72,8 +74,8 @@ $app->get('/', function () use($app) {
         'app_title' => 'Backbone.js REST Boilerplate',
 
         // Use the release version from the build script
-        'assets_js_path' => 'dist/release',
-        'assets_css_path' => 'dist/release',
+        'assets_js_path' => $app->config('mode') == 'production' ? 'dist/release' : 'assets/js/libs',
+        'assets_css_path' => $app->config('mode') == 'production' ? 'dist/release' : 'assets/css',
     ));
 });
 
