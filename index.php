@@ -15,6 +15,8 @@ $app = new Slim(array(
 $app->get('/', function () use($app) {
     $app->render('layout.html', array(
       'app_title' => 'Backbone.js REST Boilerplate',
+      'assets_js_path' => 'dist/release',
+      'assets_css_path' => 'dist/release',
     ));
 });
 
