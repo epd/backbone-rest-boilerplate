@@ -51,6 +51,9 @@ config.init({
       "assets/js/libs/almond.js",
       "dist/debug/templates.js",
       "dist/debug/require.js"
+    ],
+    "assets/js/app.js": [
+      "dist/debug/require.js"
     ]
   },
 
@@ -59,14 +62,20 @@ config.init({
   // also minifies all the CSS as well.  This is named index.css, because we
   // only want to load one stylesheet in index.html.
   mincss: {
-    "dist/release/index.css": [
-      "assets/css/style.css"
+    "dist/release/app.css": [
+      "assets/css/app.css"
+    ],
+    "assets/css/app.css": [
+      "dist/release/app.css"
     ]
   },
 
   // Takes the built require.js file and minifies it for filesize benefits.
   min: {
     "dist/release/require.js": [
+      "dist/debug/require.js"
+    ],
+    "assets/js/app.js": [
       "dist/debug/require.js"
     ]
   },

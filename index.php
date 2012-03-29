@@ -74,8 +74,8 @@ $app->get('/', function () use($app) {
         'app_title' => 'Backbone.js REST Boilerplate',
 
         // Use the release version from the build script
-        'assets_js_path' => $app->config('mode') == 'production' ? 'dist/release' : 'assets/js/libs',
-        'assets_css_path' => $app->config('mode') == 'production' ? 'dist/release' : 'assets/css',
+        'assets_js' => 'assets/js/' . ($app->config('mode') == 'development' ? 'libs/require.js' : 'app.js'),
+        'assets_css' => 'assets/css/app.css',
     ));
 });
 
