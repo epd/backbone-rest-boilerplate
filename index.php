@@ -13,18 +13,18 @@ $app = new Slim(array(
  * Mongo connection.
  */
 /* --- Comment this line to enable MongoDB support ---
-$_SERVER['mongo.hostname'] = 'localhost';
 try {
-    // Default connection resource
-    $dsn = sprintf('mongodb://%s', $_SERVER['mongo.hostname']);
+    // Connection defaults
+    $_SERVER['mongo.hostname'] = isset($_SERVER['mongo.hostname']) ? $_SERVER['mongo.hostname'] : 'localhost';
+    $dsn = sprintf('%s', isset($_SERVER['mongo.socket']) && !empty($_SERVER['mongo.socket']) ? $_SERVER['mongo.socket'] : $_SERVER['mongo.hostname']);
 
     // If we need to authenticate, go ahead and do it
     if (isset($_SERVER['mongo.username']) && !empty($_SERVER['mongo.username'])) {
-        $dsn = sprintf('mongodb://%s:%s@%s', $_SERVER['mongo.hostname'], $_SERVER['mongo.username'], $_SERVER['mongo.password']);
+        $dsn = sprintf('%s:%s@%s', $_SERVER['mongo.username'], $_SERVER['mongo.password'], $dsn);
     }
 
     // Make the connection!
-    $mongo = new Mongo($dsn, array('persist' => 'x'));
+    $mongo = new Mongo(sprintf('mongodb://%s', $dsn), array('persist' => 'x'));
 }
 
 // An error has occured connecting to DB
@@ -38,6 +38,12 @@ catch (MongoConnectionException $e) {
  */
 /* --- Comment this line to enable PDO support ---
 try {
+    // Connection defaults
+    $_SERVER['pdo.hostname'] = isset($_SERVER['pdo.hostname']) ? $_SERVER['pdo.hostname'] : 'localhost';
+    $_SERVER['pdo.database'] = isset($_SERVER['pdo.database']) ? $_SERVER['pdo.database'] : '';
+    $_SERVER['pdo.username'] = isset($_SERVER['pdo.username']) ? $_SERVER['pdo.username'] : '';
+    $_SERVER['pdo.password'] = isset($_SERVER['pdo.password']) ? $_SERVER['pdo.password'] : '';
+
     // Go ahead and create our connection!
     $pdo = new PDO(
 
